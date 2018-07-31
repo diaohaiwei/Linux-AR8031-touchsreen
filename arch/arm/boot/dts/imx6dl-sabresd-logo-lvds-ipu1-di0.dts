@@ -1,0 +1,39 @@
+/*
+ * Copyright (C) 2015 Freescale Semiconductor, Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include "imx6dl-sabresd.dts"
+
+&mxcfb1 {
+	compatible = "fsl,mxc_sdc_fb";
+	disp_dev = "ldb";
+	interface_pix_fmt = "RGB666";
+	default_bpp = <32>;
+	int_clk = <0>;
+	late_init = <1>;
+	fb_base = <0x18800000>;  /* Frame buffer base address, it is same as CONFIG_FB_BASE in Uboot. */
+	fb_size = <0x01800000>;  /* Reserved display memory size, bigger than 3 x framer buffer size. */
+	status = "okay";
+};
+
+&ldb {
+	lvds-channel@0 {
+		primary;
+		crtc = "ipu1-di0";
+		status = "okay";
+	};
+
+        lvds-channel@1 {
+                status = "disabled";
+        };
+};
+
+&ipu1 {
+	bypass_reset = <1>;
+	status = "okay";
+};
+
